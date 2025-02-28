@@ -1,0 +1,12 @@
+{% extends 'default.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Неверный код</title>
+</head>
+<body>
+    {% block content %}
+    <div class="text-center"><h2>Неверный код</h2></div>
+    <button><a class="btn" href="{% url 'onetime_code' %}">Ввести снова</a></button>
+    {% endblock content %}
+</body>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'default.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    {% block header %}
+    <!-- Header - set the background image for the header in the line below-->
+    <header class="py-5 bg-image-full" style="background-image: url('/media/Main_header.jpg')">
+            <div class="text-center my-5">
+                <h1 class="text-white fs-3 fw-bolder">Доска объявлений</h1>
+                <p class="text-white-50 mb-0">Здесь ты точно найдёшь то, что ищешь!</p>
+            </div>
+            <div style="height: 100px"></div>
+    </header>
+    {% endblock header %}
+    {% block content %}
+        {% if posts %}
+            {% for post in posts %}
+                <div>
+                    <a class="navbar-brand" href="{% url 'post_detail' post.id %}"><h3>{{post.title}}</h3></a>
+                    <p>{{post.author.username}}</p>
+                    <p>{{post.get_category_display}}</p>
+                    <p>{{post.date}}</p>
+                </div>
+                <hr>
+            {% endfor %}
+        {% else %}
+            <h2>Пока нет объявлений</h2>
+        {% endif %}
+
+
+    {% endblock content %}
+</body>
+</html>

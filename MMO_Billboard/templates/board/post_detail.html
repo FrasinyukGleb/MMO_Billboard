@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+
+{% extends 'default.html' %}
+<head>
+    <meta charset="UTF-8">
+    <link href="/static/css/styles.css" rel="stylesheet"/>
+    <title>{{post.title}}</title>
+</head>
+<body>
+    {% block content %}
+    <section>
+            <h3>{{post.title}}</h3>
+            <h5>Автор: {{post.author.username}}</h5>
+            <div>
+                {{post.content|safe}}
+            </div>
+    </section>
+        <section>
+            <div>
+                {% if post.author != user %}
+                    {% if user.is_authenticated %}
+                        <button> <a href="{% url 'reply_create' post.id %}">Откликнуться</a></button>
+                    {% else %}
+                        <p class="navbar-brand">
+                            Чтобы откликнуться на объявление необходимо
+                            <a href="{% url 'login' %}">войти</a>
+                        </p>
+                    {% endif %}
+                {% else %}
+                    <button class="btn"> <a href="{% url 'post_delete' post.id %}">Удалить</a></button>
+                    <button class="btn"> <a href="{% url 'post_update' post.id %}">Редактировать</a></button>
+
+                {% endif %}
+                {% endblock content %}
+            </div>
+        </section>
+</body>
+
+</html>

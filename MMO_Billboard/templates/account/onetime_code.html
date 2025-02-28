@@ -1,0 +1,19 @@
+{% extends 'default.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+</head>
+<body>
+    {% block content %}
+    <p>Вам на почту был выслан код авторизации.</p> <br>
+
+    <form action="{% url 'onetime_code' %}" method="post" name="code">
+        {% csrf_token %}
+        <label>
+            <input class="text" type="text" name="code" placeholder="Код активации">
+        </label>
+        <p><button type="submit">Подтвердить</button></p>
+    </form>
+    {% endblock content %}
+</body>

@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reply</title>
+</head>
+<body>
+    {% block content %}
+    <form class="text-center my-5" action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Отправить" />
+    </form>
+    {% endblock content %}
+</body>

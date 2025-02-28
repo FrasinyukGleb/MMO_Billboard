@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends 'default.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    {% block header %}
+    <!-- Header - set the background image for the header in the line below-->
+    <header class="py-5 bg-image-full" style="background-image: url('/media/Main_header.jpg')">
+            <div class="text-center my-5">
+                <h1 class="text-white fs-3 fw-bolder">Доска объявлений</h1>
+                <p class="text-white-50 mb-0">Личный кабинет!</p>
+            </div>
+            <div style="height: 100px"></div>
+    </header>
+    {% endblock header %}
+    {% block content %}
+    <a class="navbar-brand" href="{% url 'post_list' %}"><h5>Мои объявления (просмотреть)</h5></a>
+    <p></p>
+    <section class="text-center my-5">
+        <h5>Отклики</h5>
+           <form action="" method="get">
+               {{ filterset.form.as_p }}
+               <input type="submit" value="Найти" />
+           </form>
+            {% if replies %}
+                    {% for reply in replies %}
+                            <p>Автор: {{ reply.author.username }}</p>
+                            <p>Пост: {{ reply.post }}</p>
+                            <p>{{ reply.text }}</p>
+                            <p>{{ reply.date|date:'d M Y' }}</p>
+                            <button> <a href="{% url 'reply_delete' pk=reply.id %}"> Удалить </a></button>
+                            {% if not reply.accepted %}
+                                <button> <a href="{% url 'reply_accept' pk=reply.id %}"> Принять </a></button>
+                            {% endif %}
+                            <hr>
+                    {% endfor %}
+                <hr>
+            {% else %}
+            <div class="text-center my-5">Нет откликов</div>
+            {% endif %}
+    </section>
+
+    <div class="text-center">
+        <div class="container">
+        {% if page_obj.has_previous %}
+           <a href="?page=1">1</a>
+            {% if page_obj.previous_page_number != 1 %}
+               ...
+               <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+           {% endif %}
+       {% endif %}
+
+       {# Информация о текущей странице #}
+       {{ page_obj.number }}
+
+       {# Информация о следующих страницах #}
+       {% if page_obj.has_next %}
+           <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+           {% if paginator.num_pages != page_obj.next_page_number %}
+               ...
+               <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+           {% endif %}
+       {% endif %}
+        </div>
+        {% endblock content %}
+    </div>
+</body>
+</html>
